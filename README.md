@@ -13,8 +13,10 @@
 - `docs/项目书.md`：项目方案书
 - `docs/执行框架.md`：执行框架
 - `framework/`：结构契约、Prompt 基线、Runbook、校验与展示边界
-- `workspace/`：状态、checkpoint、输出、报告
-- `journey-to-the-west/xiyouji_txt/`：章节原文样本数据
+- `workspace/`：通用模板工作区
+- `journey-to-the-west/`：《西游记》小说工作空间
+- `journey-to-the-west/xiyouji_txt/`：《西游记》原文章节源文本
+- `journey-to-the-west/workspace/`：《西游记》实际运行工作区
 
 执行原则：
 
