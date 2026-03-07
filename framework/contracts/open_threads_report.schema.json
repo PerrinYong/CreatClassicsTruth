@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "open_threads_report.schema.json",
+  "title": "Open Threads Report",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["thread_id", "status"],
+    "properties": {
+      "thread_id": { "type": "string" },
+      "thread_type": { "type": "string" },
+      "summary": { "type": "string" },
+      "status": { "type": "string" },
+      "opened_in_chapter": { "type": "string" },
+      "resolved_in_chapter": { "type": ["string", "null"] }
+    },
+    "additionalProperties": true
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "chapter_truth.schema.json",
+  "title": "Chapter Truth",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "book_id",
+    "chapter_id",
+    "chapter_title",
+    "events",
+    "entity_changes",
+    "relation_changes",
+    "object_changes",
+    "environment_changes",
+    "foreshadowing_or_open_threads",
+    "chapter_summary_for_next_state"
+  ],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "book_id": { "type": "string" },
+    "chapter_id": { "type": "string" },
+    "chapter_title": { "type": "string" },
+    "chapter_source_meta": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "event_id",
+          "order",
+          "plot_role",
+          "summary",
+          "fact_type",
+          "certainty",
+          "source_anchor",
+          "source_cues",
+          "participants",
+          "trigger",
+          "result"
+        ],
+        "properties": {
+          "event_id": { "type": "string" },
+          "order": { "type": "integer", "minimum": 1 },
+          "plot_role": { "type": "string" },
+          "summary": { "type": "string" },
+          "fact_type": {
+            "type": "string",
+            "enum": ["explicit", "inferred", "uncertain"]
+          },
+          "certainty": {
+            "type": "string",
+            "enum": ["high", "medium", "low"]
+          },
+          "needs_review": { "type": "boolean" },
+          "source_anchor": { "type": "string" },
+          "source_cues": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "span_id": { "type": "string" },
+          "participants": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "location": { "type": "string" },
+          "environment": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "important_objects": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "trigger": { "type": "string" },
+          "result": { "type": "string" },
+          "state_changes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["target_type", "target_id", "field", "before", "after"],
+              "properties": {
+                "target_type": { "type": "string" },
+                "target_id": { "type": "string" },
+                "field": { "type": "string" },
+                "before": {},
+                "after": {}
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "entity_changes": { "type": "array" },
+    "relation_changes": { "type": "array" },
+    "group_status_changes": { "type": "array" },
+    "object_changes": { "type": "array" },
+    "environment_changes": { "type": "array" },
+    "foreshadowing_or_open_threads": { "type": "array" },
+    "chapter_summary_for_next_state": { "type": "string" }
+  },
+  "additionalProperties": false
+}

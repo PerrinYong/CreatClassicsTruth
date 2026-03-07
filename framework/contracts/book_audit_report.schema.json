@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "book_audit_report.schema.json",
+  "title": "Book Audit Report",
+  "type": "object",
+  "required": ["summary", "issues"],
+  "properties": {
+    "summary": { "type": "string" },
+    "issues": { "type": "array" }
+  },
+  "additionalProperties": true
+}

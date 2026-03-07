@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "timeline_snapshots.schema.json",
+  "title": "Timeline Snapshots",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "snapshot_id",
+      "chapter_id",
+      "anchor_event_id",
+      "order",
+      "characters_present",
+      "active_relations",
+      "environment_constraints",
+      "important_objects_in_play",
+      "current_conflicts",
+      "open_threads_touched"
+    ],
+    "properties": {
+      "snapshot_id": { "type": "string" },
+      "chapter_id": { "type": "string" },
+      "anchor_event_id": { "type": "string" },
+      "order": { "type": "integer", "minimum": 1 },
+      "location": { "type": "string" },
+      "characters_present": { "type": "array", "items": { "type": "string" } },
+      "active_relations": { "type": "array" },
+      "environment_constraints": { "type": "array", "items": { "type": "string" } },
+      "important_objects_in_play": { "type": "array", "items": { "type": "string" } },
+      "current_conflicts": { "type": "array", "items": { "type": "string" } },
+      "open_threads_touched": { "type": "array", "items": { "type": "string" } }
+    },
+    "additionalProperties": false
+  }
+}

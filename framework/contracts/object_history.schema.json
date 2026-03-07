@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "object_history.schema.json",
+  "title": "Object History",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["object_id"],
+    "properties": {
+      "object_id": { "type": "string" },
+      "object_name": { "type": "string" },
+      "object_type": { "type": "string" },
+      "current_holder": { "type": "string" },
+      "ownership_history": { "type": "array" },
+      "usage_history": { "type": "array" },
+      "story_function": { "type": "string" }
+    },
+    "additionalProperties": true
+  }
+}

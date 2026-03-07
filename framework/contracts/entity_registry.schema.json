@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entity_registry.schema.json",
+  "title": "Entity Registry",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["entity_id", "canonical_name"],
+    "properties": {
+      "entity_id": { "type": "string" },
+      "canonical_name": { "type": "string" },
+      "aliases": { "type": "array", "items": { "type": "string" } },
+      "entity_type": { "type": "string" },
+      "first_seen_chapter": { "type": "string" },
+      "last_seen_chapter": { "type": "string" },
+      "current_status": { "type": "string" },
+      "identity_resolution_status": { "type": "string" }
+    },
+    "additionalProperties": true
+  }
+}

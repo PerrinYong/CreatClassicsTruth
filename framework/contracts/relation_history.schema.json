@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "relation_history.schema.json",
+  "title": "Relation History",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["source", "target", "relation_type"],
+    "properties": {
+      "source": { "type": "string" },
+      "target": { "type": "string" },
+      "relation_type": { "type": "string" },
+      "status": { "type": "string" },
+      "valid_from_chapter": { "type": "string" },
+      "valid_to_chapter": { "type": ["string", "null"] },
+      "reason_event_ids": { "type": "array", "items": { "type": "string" } }
+    },
+    "additionalProperties": true
+  }
+}
