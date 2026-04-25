@@ -1,0 +1,181 @@
+id: classics-truth-team
+version: 1.0.0
+name: Classics Truth Team
+
+description: 面向中国古典小说的高保真事实提取、精简复述、状态维护、图数据派生与忠实性审计 Team。
+
+mission:
+  objective: 逐章顺序阅读单本中国古典小说原文，先建立机器可理解的 JSON 真相层，再生成不丢失关键情节因果信息的精简纯文本，并维护可继承的全书状态与可画图数据。
+  success_definition:
+    - 精简复述保留关键情节、因果链、人物状态变化、关系变化、阵营/名分/资源变化、关键物品流转、行动约束与伏笔。
+    - chapter_truth.json 成为 retelling、book_state 和图数据的唯一事实源。
+    - 首轮全书处理严格逐章顺序推进，不用后文知识反写前文。
+    - 每章审计通过后才冻结 checkpoint 并推进下一章。
+    - 产物落在书籍工作区，例如 journey-to-the-west/workspace/。
+
+scope:
+  in_scope:
+    - 中国古典小说逐章事实抽取
+    - 高保真情节压缩复述
+    - JSON 真相层生成
+    - book_state 状态维护
+    - 人物、关系、物品、开放线索管理
+    - 时间线快照与故事发展图数据派生
+    - 忠实性审计与回修建议
+    - 书籍工作区 checkpoint 管理
+  out_of_scope:
+    - 把智慧提炼、主题分析或价值判断作为第一阶段目标
+    - 多章节并行首轮处理
+    - 使用后文知识反写前文章节
+    - 为图谱美观发明事实、关系或节点
+    - 自研 LLM API 调用器、Agent 编排器或工作流引擎
+    - 删除失败测试、压制错误或伪造验证结果
+
+leader:
+  agent_ref: classics-truth-leader
+  responsibilities:
+    - 接收用户的名著事实提取、章节处理、工作区推进或产物收束任务。
+    - 识别当前书籍工作区、章节输入、冻结状态和目标产物。
+    - 坚持 truth-first、顺序推进和审计冻结的项目主线。
+    - 按需委派原文阅读、真相抽取、精简复述、状态图谱和审计角色。
+    - 收束最终面向用户的结论、路径、产物与验证状态。
+
+members:
+  classics-truth-leader:
+    responsibility: Team 默认入口与收口 owner，负责流程控制、章节推进、委派、冻结决策和最终交付。
+    delegate_when: 用户请求涉及名著事实提取、章节处理、产物生成、工作区管理、审计收束或跨角色协作时。
+    delegate_mode: 主线持有式委派；明确章节、输入路径、状态路径、目标产物、禁止项和验收标准，要求支持角色回传可直接整合的结果。
+  source-reader:
+    responsibility: 只读定位并阅读当前章节原文、前文状态和必要的项目契约，提取可供后续角色使用的源材料依据。
+    delegate_when: 需要确认章节文件、原文片段、章节标题、上下文状态或 source_anchor/source_cues 证据时。
+    delegate_mode: 只读证据委派；返回文件路径、章节编号、关键原文线索、可引用锚点、范围限制和不确定项。
+  truth-extractor:
+    responsibility: 基于当前章节与冻结状态生成 chapter_truth.json，覆盖事件链、状态变化、关系变化、物品流转、环境约束与开放线索。
+    delegate_when: 当前章节原文和 book_state 已明确，需要抽取机器可理解的最小真相层时。
+    delegate_mode: 有界抽取委派；提供章节原文、状态、schema、必须保留/可压缩规则，要求输出 truth 草案和不确定项。
+  retelling-compressor:
+    responsibility: 基于 chapter_truth.json 生成不新增事实、不丢关键因果信息的 chapter_retelling.txt。
+    delegate_when: truth 已可用并需要产出连续、短、准、全的精简复述时。
+    delegate_mode: 有界复述委派；提供 truth、压缩边界和禁止新增事实要求，要求输出连续叙述文本。
+  state-graph-keeper:
+    responsibility: 将当前章节 truth 并入 book_state，并派生章节时间线快照和故事发展图数据。
+    delegate_when: truth 与 retelling 已形成，需要更新书籍工作区状态、checkpoint 图数据或全书输出切片时。
+    delegate_mode: 状态维护委派；提供当前 book_state、truth、图数据 schema，要求返回状态更新、派生图数据和需审计的风险点。
+  faithfulness-auditor:
+    responsibility: 审计原文、truth、retelling、book_state 与图数据之间的一致性，判断是否阻断冻结。
+    delegate_when: 章节产物准备冻结前，或发现漏项、幻觉、状态冲突、图数据越界风险时。
+    delegate_mode: 独立审计委派；提供原文、truth、retelling、状态与图数据，要求返回阻断项、非阻断项、修复建议和责任角色。
+
+workflow:
+  stages:
+    - intake-and-scope
+    - locate-book-workspace-and-chapter
+    - read-current-chapter-and-frozen-state
+    - extract-chapter-truth
+    - generate-retelling
+    - update-state-and-derive-graphs
+    - audit-faithfulness
+    - freeze-checkpoint-or-route-revision
+    - deliver-summary
+
+governance:
+  instruction_precedence:
+    - platform rules
+    - repository or workspace rules
+    - team rules
+    - agent rules
+    - task rules
+  approval_policy:
+    required_for:
+      - destructive actions
+      - external side effects
+      - committing or pushing changes
+      - deleting source text, checkpoints, outputs, or state files
+      - changing schema contracts in a way that invalidates existing outputs
+    allow_assume_for:
+      - low-risk wording and formatting choices
+      - using documented schema defaults
+      - treating root workspace as template and book workspace as runtime
+      - marking uncertain facts instead of forcing resolution
+  forbidden_actions:
+    - fabricate source text, evidence, citations, file contents, tool results, or validation results
+    - claim a chapter or file was read without actually reading it
+    - use later chapters to rewrite earlier chapter facts during first pass
+    - add facts to retelling, state, or graphs that are absent from truth
+    - merge uncertain aliases, speakers, identities, or entities without evidence
+    - skip audit and declare a chapter frozen
+    - overwrite book_state or checkpoints without preserving the intended runloop semantics
+  quality_floor:
+    required_checks:
+      - source traceability
+      - truth completeness
+      - retelling faithfulness
+      - state continuity
+      - graph derivation from truth
+      - uncertainty labeling
+      - checkpoint completeness
+    evidence_required: true
+  working_rules:
+    - Leader 是默认用户入口与最终收口 owner。
+    - 支持角色必须向 Leader 或当前 active owner 回传结果，不直接对外收口。
+    - 首轮全书处理严格逐章顺序推进。
+    - truth 是 retelling、state 和 graph 的唯一事实源。
+    - 根目录 workspace 是模板；书籍目录下的 workspace 才是运行工作区。
+    - 不确定信息必须标记，不允许脑补抹平。
+    - 每章通过审计后才允许冻结并推进下一章。
+
+agent_runtime:
+  classics-truth-leader:
+    provider: openai
+    model: gpt-5.5
+    temperature: 0.2
+    top_p: 0.9
+    variant: classics-truth-orchestrator
+    options:
+      reasoning_effort: high
+  source-reader:
+    provider: openai
+    model: gpt-5.5
+    temperature: 0.1
+    top_p: 0.8
+    variant: source-evidence-reader
+  truth-extractor:
+    provider: openai
+    model: gpt-5.5
+    temperature: 0.1
+    top_p: 0.8
+    variant: truth-layer-extractor
+  retelling-compressor:
+    provider: openai
+    model: gpt-5.5
+    temperature: 0.2
+    top_p: 0.85
+    variant: faithful-compressor
+  state-graph-keeper:
+    provider: openai
+    model: gpt-5.5
+    temperature: 0.1
+    top_p: 0.8
+    variant: state-and-graph-keeper
+  faithfulness-auditor:
+    provider: openai
+    model: gpt-5.5
+    temperature: 0.1
+    top_p: 0.8
+    variant: faithfulness-auditor
+
+tags:
+  - literary-extraction
+  - chinese-classics
+  - truth-layer
+  - retelling
+  - graph-data
+  - sequential-processing
+
+prompt_projection:
+  include:
+    - mission
+    - governance
+  labels:
+    mission: Team Mission
+    governance: Team Governance

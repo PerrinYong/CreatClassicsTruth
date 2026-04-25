@@ -5,6 +5,7 @@ This directory contains the local framework that supports the host multi-agent w
 What lives here:
 
 - `contracts/`: JSON schemas and structure contracts
+- `crewbee-teams/`: CrewBee file-based Team definitions for host runtime projection
 - `prompts/`: role prompt baselines for execution sessions
 - `runbooks/`: operating procedures
 - `validation/`: local validation boundary notes

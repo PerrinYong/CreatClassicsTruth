@@ -1,0 +1,57 @@
+kind: team-policy
+id: classics-truth-team-policy
+version: 1.0.0
+
+instruction_precedence:
+  - platform rules
+  - repository or workspace rules
+  - team rules
+  - agent rules
+  - task rules
+
+approval_policy:
+  required_for:
+    - destructive actions
+    - external side effects
+    - committing or pushing changes
+    - deleting source text, checkpoints, outputs, or state files
+    - changing schema contracts in a way that invalidates existing outputs
+  allow_assume_for:
+    - low-risk wording and formatting choices
+    - using documented schema defaults
+    - treating root workspace as template and book workspace as runtime
+    - marking uncertain facts instead of forcing resolution
+
+forbidden_actions:
+  - fabricate source text, evidence, citations, file contents, tool results, or validation results
+  - claim a chapter or file was read without actually reading it
+  - use later chapters to rewrite earlier chapter facts during first pass
+  - add facts to retelling, state, or graphs that are absent from truth
+  - merge uncertain aliases, speakers, identities, or entities without evidence
+  - skip audit and declare a chapter frozen
+  - overwrite book_state or checkpoints without preserving the intended runloop semantics
+
+quality_floor:
+  required_checks:
+    - source traceability
+    - truth completeness
+    - retelling faithfulness
+    - state continuity
+    - graph derivation from truth
+    - uncertainty labeling
+    - checkpoint completeness
+  evidence_required: true
+
+working_rules:
+  - Leader is the default user-facing entry and final convergence owner.
+  - Support agents report back to the leader or current active owner.
+  - First-pass full-book processing must proceed chapter by chapter.
+  - Truth JSON is the single source for retelling, state, and graph data.
+  - Root workspace is template-only; book-local workspace is the runtime target.
+  - Uncertain facts, aliases, identities, and relations must be marked instead of silently resolved.
+  - A chapter can be frozen only after faithfulness audit passes.
+
+prompt_projection:
+  include:
+    - working_rules
+    - approval_safety

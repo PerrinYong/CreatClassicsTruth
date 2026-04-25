@@ -12,7 +12,7 @@
 
 - `docs/项目书.md`：项目方案书
 - `docs/执行框架.md`：执行框架
-- `framework/`：结构契约、Prompt 基线、Runbook、校验与展示边界
+- `framework/`：结构契约、Prompt 基线、Runbook、CrewBee Team、校验与展示边界
 - `workspace/`：通用模板工作区
 - `journey-to-the-west/`：《西游记》小说工作空间
 - `journey-to-the-west/xiyouji_txt/`：《西游记》原文章节源文本
@@ -36,5 +36,7 @@
 - LLM API 调用器
 - Agent 编排器
 - 工作流引擎
+
+CrewBee 文件型 Team 定义位于 `framework/crewbee-teams/classics-truth-team/`，用于把本项目的章节 runloop、角色分工和审计冻结规则投射到宿主 Agent runtime。
 
 详情见 `docs/项目书.md` 与 `docs/执行框架.md`。
